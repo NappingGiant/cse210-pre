@@ -1,0 +1,37 @@
+
+Flow:
+The main will display a menu for each of the methods defined in the
+Journal class, and an exit option. The JournalEntry class defines
+each entry in the Journal, and provides a Display option. The
+Prompt class Get method returns a random choice of prompts as a string.
+
+Classes:
+
+-------------------------------
+JournalEntry
+-------------------------------
+_prompt: string
+_entryDate: string
+_response: string
+-------------------------------
+Display(): void
+-------------------------------
+
+-------------------------------
+Journal
+-------------------------------
+List<JournalEntry> _journal: List
+-------------------------------
+AddEntry: void
+DisplayAll: void
+SaveToFile: void
+ReadFromFile: void
+-------------------------------
+
+-------------------------------
+Prompt
+-------------------------------
+List<string>: List
+-------------------------------
+Get(): string
+-------------------------------
