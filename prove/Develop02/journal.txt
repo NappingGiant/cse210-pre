@@ -1,6 +1,1 @@
-1/21/2023|If I had one thing I could do over today, what would it be?|Do overs.
-1/21/2023|How did I see the hand of the Lord in my life today?|Hand of the Lord.
-1/21/2023|Who was the most interesting person I interacted with today?|The person in the mirror, methinks.
-1/21/2023|What is something interesting that I learned today?|That an instantiated class added to a list maintains a reference to the list item. So a change to the object changes the object in the list. Bah!
-1/21/2023|What did I learn about myself today?|That I'm a lunatic at times. And at other times I'm not. Regardless, what a ride this nano-blip is!
-1/21/2023|What accomplishment today gave me the most satisfaction?|Figuring out what the classes should be for this assignment. I need to think more clearly :p
+1/23/2023|What was the strongest emotion I felt today?|Elation!
