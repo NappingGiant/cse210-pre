@@ -7,9 +7,9 @@
 
 public class JournalEntry
 {
-    public string _prompt = "";
-    public string _entryDate = "";
-    public string _response = "";
+    public string prompt = "";
+    public string entryDate = "";
+    public string response = "";
 
     public JournalEntry()
     {
@@ -17,7 +17,7 @@ public class JournalEntry
 
     public void Display()
     {
-        Console.WriteLine($"{_entryDate} - {_prompt}\n {_response}\n");
+        Console.WriteLine($"{entryDate} - {prompt}\n{response}\n");
     }
 
 }
