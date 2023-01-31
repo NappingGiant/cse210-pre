@@ -1,0 +1,43 @@
+
+Abstraction in programming is a way of hiding details about how 
+something works and providing a less complex interface.
+
+Abstraction allows a programmer to focus on the solution without 
+having to worry about the details.
+
+A common example of abstraction is the Console.Writeline() method, 
+which puts a text string on the console, without the programmer 
+needing to be concerned about how that is even possible.
+
+A simple example is the Prompt class, which hides the List of 
+possible entries and how an entry is selected. The programmer only 
+needs to use the Get() method and doesn't have to worry about setting 
+up the List nor the random class, as shown here:
+
+public class Prompt
+{
+    List<string> _prompts = new List<string>
+    {
+        "Who was the most interesting person I interacted with today?",
+        "What was the best part of my day?",
+        "How did I see the hand of the Lord in my life today?",
+        "What was the strongest emotion I felt today?",
+        "If I had one thing I could do over today, what would it be?",
+        "What accomplishment today gave me the most satisfaction?",
+        "What did I learn about myself today?",
+        "What is something interesting that I learned today?"
+    };
+
+    Random _rnd = new Random();
+    
+    public Prompt()
+    {
+
+    }
+
+    public string Get()
+    {
+        int num = _rnd.Next(_prompts.Count);
+        return _prompts[num];
+    }
+}
