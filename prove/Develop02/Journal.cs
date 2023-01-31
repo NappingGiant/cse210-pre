@@ -8,25 +8,25 @@ using System.IO;
 public class Journal
 {
     // make a place to hold the journal entries
-    List<JournalEntry> journalEntries = new List<JournalEntry>();
+    List<JournalEntry> _journalEntries = new List<JournalEntry>();
 
     // the Prompt class has a list of prompts to use
-    Prompt prompter = new Prompt();
+    Prompt _prompter = new Prompt();
 
-    string ilp = "│ "; // information line prefix (menu, notifices, etc.)
+    string _ilp = "│ "; // information line prefix (menu, notifices, etc.)
     
     // file line delimiter
-    string delim = "|";
+    string _delim = "|";
 
     // newline placeholder for writing to file
-    string repl = "ˑ";
+    string _repl = "ˑ";
 
-    Storage files; // Storage class for file IO (initialized in the constructor)
+    Storage _files; // Storage class for file IO (initialized in the constructor)
 
     // constructor
     public Journal()
     {
-        files = new Storage(ilp);
+        _files = new Storage(_ilp);
     }
 
     /* AddEntry():
@@ -35,7 +35,7 @@ public class Journal
         if there's an empty response, just return
         if there's a response, create a journal entry and add it to the journal
     */
-    void addEntry(string prompt, string response)
+    void AddEntry(string prompt, string response)
     {
         // if there is a response, add the entry to the journal
         if(response !="")
@@ -49,32 +49,32 @@ public class Journal
             DateTime theCurrentTime = DateTime.Now;
             entry.entryDate = theCurrentTime.ToShortDateString();
 
-            journalEntries.Add(entry);
-            Console.WriteLine($"\n{ilp}journal entry Added\n{ilp}");
+            _journalEntries.Add(entry);
+            Console.WriteLine($"\n{_ilp}journal entry Added\n{_ilp}");
         }
         else // empty response, so just exit
         {
-            Console.WriteLine($"\n{ilp}journal entry NOT Added due to no response\n{ilp}");
+            Console.WriteLine($"\n{_ilp}journal entry NOT Added due to no response\n{_ilp}");
         }
     }
 
-    public void promptedEntry()
+    public void PromptedEntry()
     {
         // get a random prompt
-        string prompt = prompter.Get();
+        string prompt = _prompter.Get();
 
         // prompt for and get the response
         Console.WriteLine(prompt);
         Console.Write("> ");
         string response = Console.ReadLine();
 
-        addEntry(prompt, response);
+        AddEntry(prompt, response);
     }
 
     /* freeEntry()
         unprompted entry, multiple paragraphs
     */
-    public void freeEntry()
+    public void FreeEntry()
     {
         Console.WriteLine("Use <enter> to add a paragraph. An empty paragraph ends entry.");
 
@@ -94,7 +94,7 @@ public class Journal
             }
         }
 
-        addEntry("", response);
+        AddEntry("", response);
     }
 
 
@@ -104,12 +104,12 @@ public class Journal
     public void DisplayAll()
     {
         //Console.WriteLine($"{lp}showing {journalEntries.Count} journal entries:\n");
-        Console.WriteLine($"{ilp}Number of journal entries to show: {journalEntries.Count}\n");
-        foreach(JournalEntry entry in journalEntries)
+        Console.WriteLine($"{_ilp}Number of journal entries to show: {_journalEntries.Count}\n");
+        foreach(JournalEntry entry in _journalEntries)
         {
             entry.Display(); // use the JournalEntry's Display method
         }
-        Console.WriteLine($"{ilp}end of journal\n");
+        Console.WriteLine($"{_ilp}end of journal\n");
     }
 
     /* Save():
@@ -117,15 +117,15 @@ public class Journal
     */
     public void Save()
     {
-        Console.WriteLine($"{ilp}Ok, saving the journal");
-        files.clearLines(); // remove any existing data in the file IO List
-        foreach(JournalEntry entry in journalEntries)
+        Console.WriteLine($"{_ilp}Ok, saving the journal");
+        _files.ClearLines(); // remove any existing data in the file IO List
+        foreach(JournalEntry entry in _journalEntries)
         {
-            string response = entry.response.Replace("\n", repl); // convert newlines to a special character
-            files.addLine($"{entry.entryDate}{delim}{entry.prompt}{delim}{response}");
+            string response = entry.response.Replace("\n", _repl); // convert newlines to a special character
+            _files.AddLine($"{entry.entryDate}{_delim}{entry.prompt}{_delim}{response}");
         }
-        string filename = files.writeFile();
-        Console.WriteLine($"{ilp}{journalEntries.Count} journal entries written to {filename}\n");
+        string filename = _files.WriteFile();
+        Console.WriteLine($"{_ilp}{_journalEntries.Count} journal entries written to {filename}\n");
     }
 
     /* Load():
@@ -136,26 +136,26 @@ public class Journal
     public void Load()
     {
         // remove any existing entries in the journal
-        Console.WriteLine($"{ilp}Clearing any existing entries in the journal");
-        journalEntries.Clear();
+        Console.WriteLine($"{_ilp}Clearing any existing entries in the journal");
+        _journalEntries.Clear();
 
-        Console.WriteLine($"{ilp}Reading a journal");
+        Console.WriteLine($"{_ilp}Reading a journal");
         //string[] lines = System.IO.File.ReadAllLines(filename);
-        string filename = files.readFile();
+        string filename = _files.ReadFile();
 
-        foreach(string line in files.lines)
+        foreach(string line in _files._lines)
         {
             JournalEntry entry = new JournalEntry();
-            string[] parts = line.Split(delim);
+            string[] parts = line.Split(_delim);
 
             entry.entryDate = parts[0];
             entry.prompt = parts[1];
-            entry.response = parts[2].Replace(repl, "\n"); // convert newline placeholder back to newline
+            entry.response = parts[2].Replace(_repl, "\n"); // convert newline placeholder back to newline
 
-            journalEntries.Add(entry);
+            _journalEntries.Add(entry);
         }
 
-        Console.WriteLine($"{ilp}{journalEntries.Count} entries added to the journal from {filename}\n");
+        Console.WriteLine($"{_ilp}{_journalEntries.Count} entries added to the journal from {filename}\n");
     }
 
     /* 
@@ -170,18 +170,18 @@ public class Journal
         string selection = "";
         while(selection != "5")
         {
-            Console.WriteLine($"{ilp}There are {journalEntries.Count} entries in the journal");
-            Console.Write($"{ilp}Whadda ya wanna do now?\n{ilp} 0-Write (no prompt)\n{ilp} 1-Write (answer prompt)\n{ilp} 2-Display All\n{ilp} 3-Load\n{ilp} 4-Save\n{ilp} 5-Exit\n{ilp}Your choice? ");
+            Console.WriteLine($"{_ilp}There are {_journalEntries.Count} entries in the journal");
+            Console.Write($"{_ilp}Whadda ya wanna do now?\n{_ilp} 0-Write (no prompt)\n{_ilp} 1-Write (answer prompt)\n{_ilp} 2-Display All\n{_ilp} 3-Load\n{_ilp} 4-Save\n{_ilp} 5-Exit\n{_ilp}Your choice? ");
             selection = Console.ReadLine();
             Console.WriteLine();
 
             if(selection == "1")
             {
-                promptedEntry();
+                PromptedEntry();
             }
             else if(selection == "0")
             {
-                freeEntry();
+                FreeEntry();
             }
             else if(selection == "2")
             {
@@ -201,7 +201,7 @@ public class Journal
             }
             else
             {
-                Console.WriteLine($"\n{ilp}Huh? What is '{selection}' for?");
+                Console.WriteLine($"\n{_ilp}Huh? What is '{selection}' for?");
             }
         }
     }

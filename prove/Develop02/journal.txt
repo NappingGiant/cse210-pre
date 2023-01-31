@@ -5,3 +5,5 @@
 1/28/2023||booˑˑcooˑˑdooˑˑfoo
 1/28/2023|What is something interesting that I learned today?|Everything I learned was interesting.
 1/28/2023||unoˑˑdosˑˑtres
+1/31/2023||fooˑˑbarˑˑbaz
+1/31/2023|What is something interesting that I learned today?|I'm tired at times.
