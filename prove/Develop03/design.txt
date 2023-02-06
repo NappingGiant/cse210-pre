@@ -1,0 +1,172 @@
+
+
+/*
+    Specification
+
+    Functional requirements
+    Your program must do the following:
+
+        1. Store a scripture, including both the reference (for example "John 3:16") and the text of the scripture.
+        2. Accommodate scriptures with multiple verses, such as "Proverbs 3:5-6".
+        3. Clear the console screen and display the complete scripture, including the reference and the text.
+        4. Prompt the user to press the enter key or type quit.
+        5. If the user types quit, the program should end.
+        6. If the user presses the enter key (without typing quit), the program should hide a few random words in the scripture, clear the console screen, and display the scripture again.
+        7. The program should continue prompting the user and hiding more words until all words in the scripture are hidden.
+        8. When all words in the scripture are hidden, the program should end.
+        9. When selecting the random words to hide, for the core requirements, you can select any word at random, even if the word was already hidden. (As a stretch challenge, try to randomly select from only those words that are not already hidden.)
+
+    Design Requirements
+    In addition your program must:
+
+        1. Use the principles of Encapsulation, including proper use of classes, methods, public/private access modifiers, and follow good style throughout.
+        2. Contain at least 3 classes in addition to the Program class.
+        3. Provide multiple constructors for the scripture reference to handle the case of a single verse and a verse range ("Proverbs 3:5" or "Proverbs 3:5-6").
+*/
+
+=== current thinking, based on "mentor guidance"
+
+_______ submitted __________________________________________________
+________________________________
+class Word
+---
+_word: string
+_visible: boolean
+_hiddenText: string
+---
+Word(string word): constructor
+Hide(): void
+Show(): void
+GetDisplayText(): string
+________________________________
+
+
+________________________________
+class reference
+---
+_book: string
+_chapter: int
+_firstVerse: int
+_lastVerse: int
+_displayString: string
+---
+Reference(string book, int chapter, int firstVerse, int lastVerse): constructor
+Reference(string book, int chapter, int Verse): constructor
+GetDisplayText(): string
+________________________________
+
+
+________________________________
+class Scripture
+---
+_reference: Reference
+_text: string
+_words: List<Word>
+_hiddenState: int
+---
+Scripture(Reference, text): constructor
+HideWords(int count=3): void
+GetDisplayText(): string
+UnHide(): void
+GetHiddenState(): int
+________________________________
+
+
+________________________________
+class ScriptureMemorizer
+---
+_scriptures: List<Scripture>
+---
+GetReference(): Reference
+AddScripture(Reference reference): void
+DisplayScriptureChoices(): void
+GetChoice(): Reference
+Memorize(Reference reference): void
+________________________________
+
+ 
+___ end submitted __________________________________________________
+     
+=== first pass =======
+still don't know how to approach a problem
+________________________________
+class ScriptureQuote
+---
+_book: string
+_chapter: int
+_firstVerse: int
+_lastVerse: int
+_reference: string
+_text: string
+_words: List<Word>
+_int: wordCount
+---
+ScriptureQuote(string book, string chapter, int verse, string allText): void
+ScriptureQuote(string book, string chapter, int firstVerse, int lastVerse, string allText): void
+
+ShowQuoteReferences(): void
+DeleteWords(string words): string
+MakeReference(): string // build a reference from the book/chapter/verse(s)
+UndoReference(): string, string, int, int
+AddScripture(): void
+TextToList(): void // convert text to List<Word>
+________________________________
+
+________________________________
+class ScriptureList
+---
+_scriptureList: List<ScriptureQuote>
+_count: int
+
+---
+Add(ScriptureQuote quote): void
+Get(string book, string chapter, string firstVerse): ScriptureQuote
+Get(string reference): ScriptureQuote
+GetRandom(): ScriptureQuote
+
+________________________________
+
+________________________________
+class ScriptureMemorizer
+---
+_scriptures: ScriptureList
+
+---
+Menu() -> void
+Memorize(string reference): void // show progressively-struck scripture
+Memorize(string book, string chapter, string firstVerse): void
+
+________________________________
+
+
+________________________________
+class word
+---
+_word: string
+_visible: boolean
+---
+(word is set in contructor)
+SetVisible(boolean visible)
+________________________________
+
+
+-- for above and beyond
+// https://github.com/bcbooks/scriptures-json.git
+________________________________
+class ScriptureText
+---
+_location: string
+// https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2?view=net-7.0
+_booksToFile: Dictionary<string, string>
+________________________________
+ScriptureText(string pathToFiles): int // number of books found
+(constructor builds Dictionary of books and which file they are in)
+GetText(string book, int chapter, int firstVerse, int lastVerse): string // loads appropriate JSON file and gets text
+________________________________
+class Storage
+---
+_filename: string
+---
+Save: int
+Load: string[]
+________________________________
