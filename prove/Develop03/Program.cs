@@ -39,7 +39,7 @@ class Program
         string text1 = "I can do all things through Christ which strengheneth me.";
         Scripture script1 = new Scripture(ref1, text1);
         Console.WriteLine(script1.GetDisplayText());
-        script1.HideWords();
+        script1.HideRandomWords();
         Console.WriteLine(script1.GetDisplayText());
     }
 

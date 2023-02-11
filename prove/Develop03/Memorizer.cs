@@ -19,16 +19,18 @@ public class Memorizer{
     private List<Scripture> _scriptures;
 
     private Storage _storage;
+    private Random _rnd;
 
     public Memorizer()
     {
-        _scriptures = new List<Scripture>();
+        // inialize stuff
+        _rnd = new Random();
+
+        // load the existing data
         _storage = new Storage("scriptures.json");
-        // testing only
-        Reference tref = new Reference("Philippians", 3, 18);
-        Scripture tscr = new Scripture(tref, "I can do all things through Christ which strengtheneth me.");
-        _scriptures.Add(tscr);
-        //
+        _scriptures = _storage.Load(); // Load existing entries (file must exist)
+        
+        // Ok, all set so show a menu of options and go, go, go
         Menu();
     }
 
@@ -48,27 +50,28 @@ public class Memorizer{
             choice =  Console.ReadLine();
             if(choice == "1")
             {
-                Console.WriteLine("\nAdd a Scripture\n");
+                Console.WriteLine("\nAdd a Scripture");
                 AddScripture();
             }
             else if(choice == "2")
             {
-                Console.WriteLine("\nDisplay Scripture Choices\n");
+                Console.WriteLine("\nDisplay Scripture Choices");
                 DisplayScriptureChoices();
             }
             else if(choice == "3")
             {
-                Console.WriteLine("\nMemorize a Scripture\n");
-                Memorize(_scriptures[0]); // just choose the first (only) scripture for now
+                Console.WriteLine("\nMemorize a Scripture"); // as of now, this will be cleared immediately
+                int sel = _rnd.Next(0, _scriptures.Count);
+                Memorize(_scriptures[sel]);
             }
             else if(choice == "4")
             {
-                Console.WriteLine("\nLoad\n");
+                Console.WriteLine("\nLoad");
                 Load();
             }
             else if(choice == "5")
             {
-                Console.WriteLine("\nSave\n");
+                Console.WriteLine("\nSave");
                 Save();
             }
             else if(choice == "0")
@@ -109,7 +112,8 @@ public class Memorizer{
     {
         foreach(Scripture scripture in _scriptures)
         {
-            Console.WriteLine(scripture.GetDisplayText());
+            //Console.WriteLine(scripture.GetDisplayText());
+            Console.WriteLine($"- {scripture.GetReference()}");
         }
         Console.WriteLine();
     }
@@ -122,20 +126,30 @@ public class Memorizer{
         {
             Console.Clear();
             Console.WriteLine(scripture.GetDisplayText());
-            response = Console.ReadLine();
             if(allHidden)
+            {
+                Console.Write("\n(<enter> to return to menu, 'r' to restart, 'q' or 'quit' to return to menu) ");
+            }
+            else
+            {
+                Console.Write("\n(<enter> to continue, 'r' to restart, 'q' or 'quit' to return to menu) ");
+            }
+            response = Console.ReadLine().ToLower();
+            if(response == "r")
+            {
+                scripture.UnHide();
+                allHidden = false;
+            }
+            else if(allHidden)
             {
                 break;
             }
-            if(response == "")
+            else if(response == "")
             {
-                allHidden = scripture.HideWords();
-            }
-            else if(response == "r")
-            {
-                scripture.UnHide();
+                allHidden = scripture.HideRandomWords();
             }
         }
+        scripture.UnHide(); // restore visibility before leaving
     }
 
     private int GetInt(string prompt)

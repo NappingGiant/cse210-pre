@@ -1,20 +1,10 @@
-/*
-class Scripture
----
-_reference: Reference
-_text: string
-_words: List<Word>
-_hiddenState: int
----
-Scripture(Reference, text): constructor
-HideWords(int count=3): void
-GetDisplayText(): string
-UnHide(): void
-GetHiddenState(): int
-*/
-
 using System;
 
+///
+/// <summary>
+/// holds a scripture Reference and text
+/// </summary>
+///
 public class Scripture
 {
     private Reference _reference;
@@ -40,16 +30,31 @@ public class Scripture
         _rnd = new Random();
     }
 
+    ///
+    /// <summary>
+    /// return a reference to Reference, so the caller can refer to it.
+    /// </summary>
+    ///
     public Reference GetReferenceObject()
     {
         return(_reference);
     }
     
+    ///
+    /// <summary>
+    /// return a string of the original scripture text, with no hidden words
+    /// </summary>
+    ///
     public string GetText()
     {
         return(_text);
     }
 
+    ///
+    /// <summary>
+    /// return a string of the scripture text, with hidden words if set to such
+    /// </summary>
+    ///
     public string GetDisplayText()
     {
         string displayText = "";
@@ -60,33 +65,74 @@ public class Scripture
         return(_reference.GetDisplayText() + " - " + displayText.TrimEnd());
     }
 
-    public bool HideWords(int count = 3)
+    ///
+    /// <summary>
+    /// return a list of indexes to words that are visible (not hidden)
+    /// </summary>
+    ///
+    private List<int> GetVisibleWords()
     {
-        for(int i = 0; i < count; i++)
+        List<int> visibleWords = new List<int>();
+        for(int i = 0; i < _words.Count; i++)
         {
-            _words[_rnd.Next(_wordCount)].Hide();
-        }
-        // now see if all of the words are hidden
-        _allHidden = true ;
-        foreach(Word word in _words)
-        {
-            if(word.IsVisible())
+            if(_words[i].IsVisible())
             {
-                _allHidden = false;
+                visibleWords.Add(i);
+            }
+        }
+        return(visibleWords);
+    }
+
+    ///
+    /// <summary>
+    /// change random words to be hidden (i.e., show underscores instead of the word)
+    /// and return a boolean where true means all words are hidden
+    /// </summary>
+    ///
+    public bool HideRandomWords(int changeCount = 3)
+    {
+        // to hold a list of words still visible
+        List<int> visibleWords = new List<int>();
+        int count = 0;
+        while(count < changeCount)
+        {
+            // get a list of indexes to words still visible
+            visibleWords = GetVisibleWords();
+            if(visibleWords.Count > 0)
+            {
+                // choose a random word index and set the word to hidden
+                int seq = _rnd.Next(visibleWords.Count);
+                _words[visibleWords[seq]].Hide();
+            }
+            else // all words are hidden, get out of this loop
+            {
+                _allHidden = true;
                 break;
             }
+            count += 1;
         }
         return(_allHidden);
     }
 
+    ///
+    /// <summary>
+    /// make all of the words in the text visible
+    /// </summary>
+    ///
     public void UnHide()
     {
         foreach(Word word in _words)
         {
             word.Show();
         }
+        _allHidden = false;
     }
 
+    ///
+    /// <summary>
+    /// return a string of the scripture reference
+    /// </summary>
+    ///
     public string GetReference()
     {
         return(_reference.GetDisplayText());

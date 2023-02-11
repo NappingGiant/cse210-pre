@@ -1,16 +1,44 @@
 [
   {
     "book": "Philippians",
-    "chapter": 3,
-    "firstVerse": 18,
+    "chapter": 4,
+    "firstVerse": 13,
     "lastVerse": 0,
     "text": "I can do all things through Christ which strengtheneth me."
   },
   {
-    "book": "boo",
+    "book": "Alma",
+    "chapter": 7,
+    "firstVerse": 23,
+    "lastVerse": 24,
+    "text": "And now I would that ye should be humble, and be submissive and gentle; easy to be entreated; full of patience and long-suffering; being temperate in all things; being diligent in keeping the commandments of God at all times; asking for whatsoever things ye stand in need, both spiritual and temporal; always returning thanks unto God for whatsoever things ye do receive. And see that ye have faith, hope, and charity, and then ye will always abound in good works."
+  },
+  {
+    "book": "2 Timothy",
     "chapter": 1,
-    "firstVerse": 1,
+    "firstVerse": 7,
     "lastVerse": 0,
-    "text": "coo doo foo goo"
+    "text": "For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind."
+  },
+  {
+    "book": "1 Nephi",
+    "chapter": 3,
+    "firstVerse": 7,
+    "lastVerse": 0,
+    "text": "And it came to pass that I, Nephi, said unto my father: I will go and do the things which the Lord hath commanded, for I know that the Lord giveth no commandments unto the children of men, save he shall prepare a way for them that they may accomplish the thing which he commandeth them."
+  },
+  {
+    "book": "Numbers",
+    "chapter": 6,
+    "firstVerse": 24,
+    "lastVerse": 26,
+    "text": "The Lord bless thee, and keep thee: The Lord make his face shine upon thee, and be gracious unto thee: The Lord lift up his countenance upon thee, and give thee peace."
+  },
+  {
+    "book": "Moroni",
+    "chapter": 10,
+    "firstVerse": 3,
+    "lastVerse": 5,
+    "text": "Behold, I would exhort you that when ye shall read these things, if it be wisdom in God that ye should read them, that ye would remember how merciful the Lord hath been unto the children of men, from the creation of Adam even down until the time that ye shall receive these things, and ponder it in your hearts. And when ye shall receive these things, I would exhort you that ye would ask God, the Eternal Father, in the name of Christ, if these things are not true; and if ye shall ask with a sincere heart, with real intent, having faith in Christ, he will manifest the truth of it unto you, by the power of the Holy Ghost. And by the power of the Holy Ghost ye may know the truth of all things."
   }
 ]

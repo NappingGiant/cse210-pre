@@ -83,6 +83,9 @@ public class Storage
     ///
     public List<Scripture> Load()
     {
+        // we're going to return newList
+        List<Scripture> newList = new List<Scripture>();
+
         string jsonString = "";
         // read in the JSON representation of the save scripture list
             try
@@ -91,33 +94,36 @@ public class Storage
             }
             catch(Exception e)
             {
-                Console.WriteLine($"{_fileName} could not be read");
+                Console.WriteLine("Could not load scripture:");
                 Console.WriteLine(e.Message, e.GetType());
             }
 
-
-        // convert the JSON string to a List of storageScripture
-        List<scriptureStore> _scriptureStore = new List<scriptureStore>();
-        var options = new JsonSerializerOptions{IncludeFields = true};
-        _scriptureStore = JsonSerializer.Deserialize<List<scriptureStore>>(jsonString, options)!;
-
-
-        // convert List<scriptureStore> to List<Scripture>
-        List<Scripture> newList = new List<Scripture>();
-        foreach(scriptureStore ss in _scriptureStore)
+        // if there was something in the data file, process it
+        if(jsonString != "")
         {
-            Reference r;
-            if(ss.lastVerse == 0)
+            // convert the JSON string to a List of storageScripture
+            List<scriptureStore> _scriptureStore = new List<scriptureStore>();
+            var options = new JsonSerializerOptions{IncludeFields = true};
+            _scriptureStore = JsonSerializer.Deserialize<List<scriptureStore>>(jsonString, options)!;
+
+
+            // convert List<scriptureStore> to List<Scripture>
+            foreach(scriptureStore ss in _scriptureStore)
             {
-                r = new Reference(ss.book, ss.chapter, ss.firstVerse);
+                Reference r;
+                if(ss.lastVerse == 0)
+                {
+                    r = new Reference(ss.book, ss.chapter, ss.firstVerse);
+                }
+                else
+                {
+                    r = new Reference(ss.book, ss.chapter, ss.firstVerse, ss.lastVerse);
+                }
+                Scripture s = new Scripture(r, ss.text);
+                newList.Add(s);
             }
-            else
-            {
-                r = new Reference(ss.book, ss.chapter, ss.firstVerse, ss.lastVerse);
-            }
-            Scripture s = new Scripture(r, ss.text);
-            newList.Add(s);
         }
+
         // return the List
         return(newList);
     }
