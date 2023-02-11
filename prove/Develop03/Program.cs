@@ -4,12 +4,15 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Develop03 World!");
-        TestWord("grape");
-        TestWord("blueberry");
-        TestWord("period.");
-        TestReference();
-        TestScripture();
+       
+        //Console.WriteLine("Hello Develop03 World!");
+        //TestWord("grape");
+        //TestWord("blueberry");
+        //TestWord("period.");
+        //TestReference();
+        //TestScripture();
+        
+        Memorizer mem = new Memorizer();
     }
 
     static void TestWord(string word)

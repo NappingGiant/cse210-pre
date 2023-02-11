@@ -12,7 +12,11 @@ GetDisplayText(): string
 
 */
 using System;
-
+///
+/// <summary>
+/// Store a string that can be 'hidden' by replacing all characters with underscores.
+/// </summary>
+///
 public class Word
 {
     private string _word;
@@ -24,6 +28,11 @@ public class Word
         _word = word;
         _visible = true;
         _hiddenWord = new string('_', word.Length);
+    }
+
+    public bool IsVisible()
+    {
+        return(_visible);
     }
 
     public void Hide()
@@ -42,7 +51,8 @@ public class Word
         {
             return(_word);
         }
-        else{
+        else
+        {
             return(_hiddenWord);
         }
     }

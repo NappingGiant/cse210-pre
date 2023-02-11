@@ -17,10 +17,12 @@ using System;
 
 public class Scripture
 {
-    Reference _reference;
-    string _text;
-    List<Word> _words;
-    int _hiddenState; // 1 = not hidden, 0 = partially hidden, -1 = completely hidden
+    private Reference _reference;
+    private string _text;
+    private List<Word> _words;
+    private int _wordCount;
+    private bool _allHidden; 
+    private Random _rnd;
 
     public Scripture(Reference reference, string text)
     {
@@ -33,7 +35,19 @@ public class Scripture
             Word newWord = new Word(word);
             _words.Add(newWord);
         }
-        _hiddenState = 1;
+        _wordCount = _words.Count;
+        _allHidden = false;
+        _rnd = new Random();
+    }
+
+    public Reference GetReferenceObject()
+    {
+        return(_reference);
+    }
+    
+    public string GetText()
+    {
+        return(_text);
     }
 
     public string GetDisplayText()
@@ -46,11 +60,35 @@ public class Scripture
         return(_reference.GetDisplayText() + " - " + displayText.TrimEnd());
     }
 
-    public void HideWords()
+    public bool HideWords(int count = 3)
     {
-        _words[3].Hide();
-        _words[5].Hide();
+        for(int i = 0; i < count; i++)
+        {
+            _words[_rnd.Next(_wordCount)].Hide();
+        }
+        // now see if all of the words are hidden
+        _allHidden = true ;
+        foreach(Word word in _words)
+        {
+            if(word.IsVisible())
+            {
+                _allHidden = false;
+                break;
+            }
+        }
+        return(_allHidden);
     }
 
+    public void UnHide()
+    {
+        foreach(Word word in _words)
+        {
+            word.Show();
+        }
+    }
 
+    public string GetReference()
+    {
+        return(_reference.GetDisplayText());
+    }
 }

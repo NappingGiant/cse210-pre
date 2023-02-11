@@ -13,7 +13,11 @@ GetDisplayText(): string
 */
 
 using System;
-
+///
+/// <summary>
+/// Holds a scripture reference (book, chapter, verse(s)) to display in the form "<book> <chapter>:<verse>[-<verse>]
+/// </summary>
+///
 public class Reference
 {
     private string _book;
@@ -43,4 +47,25 @@ public class Reference
     {
         return(_displayString);
     }
+
+    public string GetBook()
+    {
+        return(_book);
+    }
+
+    public int GetChapter()
+    {
+        return(_chapter);
+    }
+
+    public int GetFirstVerse()
+    {
+        return(_firstVerse);
+    }
+
+    public int GetLastVerse()
+    {
+        return(_lastVerse);
+    }
+
 }
