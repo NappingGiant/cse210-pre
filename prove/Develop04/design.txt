@@ -1,0 +1,77 @@
+Summary:
+
+The Mindfulness class is the starting point, and instantiates
+the Timer class and the three classes named BreathingActivity,
+ReflectionActivity and ListingActivity.
+
+The Activity class is the base class for the other three
+xActivity classes, and provides the common starting and ending
+dialogs along with other commonalities.
+
+The Timer class handles timing and other clock functionalities.
+
+________________________________________________________________
+class Mindfulness
+
+Mindfulness() (instantiates 3 Activity classes and the timer class)
+Menu()
+________________________________________________________________
+
+
+________________________________________________________________
+class Activity
+
+_name: string
+_description: string
+_duration: int 
+_endTime: DateTime
+
+Activity() (instantiate timer?)
+
+GetName()
+ShowDescription()
+GetDuration()
+Start() (shows spinner for x seconds, sets end time)
+ClosingMessage()
+________________________________________________________________
+
+________________________________________________________________
+class BreathingActivity : Activity
+_breathIn: int
+_breathOut: int
+
+Breath() or Start()
+________________________________________________________________
+
+________________________________________________________________
+class ReflectionActivity : Activity
+_prompts: List<string>
+_questions: List<string>
+
+Reflection() or Start()
+ShowPrompt()
+ShowQuestion()
+________________________________________________________________
+
+________________________________________________________________
+class ListingActivity : Activity
+_prompts: List<string>
+_listCount: int
+
+List() or Start()
+GetItem()
+________________________________________________________________
+
+________________________________________________________________
+class Timer
+_totalTime: int
+_endTime: DateTime
+_spinnerTime: int
+_countDown: int
+
+GetTime()
+TimeIsUp()
+Spinner()
+CoundownTimer()
+SetDuration()
+________________________________________________________________

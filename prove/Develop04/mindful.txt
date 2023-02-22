@@ -1,0 +1,66 @@
+
+
+----------------------------------
+class Activity
+
+
+Menu()
+OpeningMessage()
+ClosingMessage()
+ShowPrompt()
+ReadText(): string
+
+
+--------------------------------------
+
+
+---------------------------------------
+class Breathing: Activity
+_breathIn: int
+_breathOut: int
+
+InPrompt()
+OutPrompt()
+
+---------------------------------------
+
+
+
+---------------------------------------
+class Listing: Activity
+_prompts: List<string>
+
+GetPrompt()
+
+---------------------------------------
+
+
+---------------------------------------
+class Reflection: Activity
+_prompts: List<string>
+_replyCount: int
+
+GetPrompt()
+
+---------------------------------------
+
+
+---------------------------------------
+class Timer
+
+---------------------------------------
+_totalTime: int
+_endTime: DateTime
+_spinnerTime: int
+_countDown: int
+
+
+GetTime()
+TimeIsUp()
+Spinner()
+CountDownTimer()
+
+
+---------------------------------------
+
+
