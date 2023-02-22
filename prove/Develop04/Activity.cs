@@ -1,5 +1,8 @@
 using System;
 
+// https://www.w3schools.com/cs/cs_variables_constants.php
+// https://stackoverflow.com/questions/45959959/how-to-measure-elapsed-time-using-datetime-class
+
 public class Activity
 {
     private int _duration;
@@ -8,7 +11,7 @@ public class Activity
     private string[] _spinnerText = {"/", "-", "\\", "|"};
     private int _spinnerTextLength;
     const int _spinnerDuration = 5;
-    
+    const int _countDownDuration = 5;
 
     public Activity()
     {
@@ -20,13 +23,17 @@ public class Activity
         Console.Clear();
         Console.WriteLine($"Welcome to the {activityName}.\n\n{description}\n");
         RequestLength();
+        Console.Clear();
         Console.Write("Get ready...  ");
         DoSpinner(_spinnerDuration);
     }
 
-    public void Finish()
+    public void Finish(int elapsedTime, string activityName)
     {
-        
+        Console.WriteLine("\nWell done!!");
+        DoSpinner();
+        Console.WriteLine($"You have completed another {elapsedTime} seconds of the {activityName}");
+        DoSpinner();
     }
     
     public void RequestLength()
@@ -46,17 +53,22 @@ public class Activity
             }
 
         }
-        Console.WriteLine("\b \n");
+        Console.WriteLine("\b ");
     }
 
-    public void DoCountdown(int length)
+    public void DoCountdown(int length = _countDownDuration)
     {
         for(int i = length; i > 0; i--)
         {
-            Console.Write($"\b{i}");
+            Console.Write($"\b\b{i,2:D}");
             Thread.Sleep(1000);
         }
-        Console.Write("\b ");
+        Console.Write("\b\b  ");
+    }
+
+    public void DoProgressBar(int length)
+    {
+        
     }
     
     public void StartTimer()
@@ -65,15 +77,14 @@ public class Activity
         _endTime = _startTime.AddSeconds(_duration);
     }
 
-    public bool TimeIsUp()
+    public bool TimeRemains()
     {
-        return(DateTime.Now > _endTime);
+        return(DateTime.Now < _endTime);
     }
 
     public int ElapsedTime()
     {
-        // https://stackoverflow.com/questions/45959959/how-to-measure-elapsed-time-using-datetime-class
-        return((int)((DateTime.Now - _startTime).TotalMilliseconds/1000));
+        return((int)((DateTime.Now - _startTime).TotalSeconds + 0.500));
     }
 
 }

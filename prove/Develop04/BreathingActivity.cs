@@ -3,10 +3,11 @@ using System;
 public class BreathingActivity : Activity
 {
     private string _activityName = "Breathing Activity";
-    private string _description =   "This activity will help you relax by walking you through breathing in and\n" +
-                            "out slowly. Clear your mind and focus on your breathing.";
-    const int _inBreath = 4;
-    const int _outBreath = 6;
+    private string _description =
+        "This activity will help you relax by walking you through breathing in and\n" +
+        "out slowly. Clear your mind and focus on your breathing.";
+    private int _inBreath = 3;
+    private int _outBreath = 5;
 
     public BreathingActivity() : base()
     {
@@ -17,12 +18,12 @@ public class BreathingActivity : Activity
     {
         Start(_activityName, _description);
         StartTimer();
-        while(!TimeIsUp())
+        while(TimeRemains())
         {
             Breathe();
         }
         int elapsedTime = ElapsedTime();
-        Finish();
+        Finish(elapsedTime, _activityName);
         return(elapsedTime);
     }
 
