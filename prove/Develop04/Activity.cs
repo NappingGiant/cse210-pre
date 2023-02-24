@@ -12,9 +12,11 @@ public class Activity
     private int _spinnerTextLength;
     const int _spinnerDuration = 5;
     const int _countDownDuration = 5;
+    protected Random _rnd;
 
     public Activity()
     {
+        _rnd = new Random();
         _spinnerTextLength = _spinnerText.Count();
     }
 
@@ -24,22 +26,32 @@ public class Activity
         Console.WriteLine($"Welcome to the {activityName}.\n\n{description}\n");
         RequestLength();
         Console.Clear();
-        Console.Write("Get ready...  ");
-        DoSpinner(_spinnerDuration);
+        TextWithSpinner("Get ready...");
     }
 
     public void Finish(int elapsedTime, string activityName)
     {
-        Console.WriteLine("\nWell done!!");
-        DoSpinner();
-        Console.WriteLine($"You have completed another {elapsedTime} seconds of the {activityName}");
-        DoSpinner();
+        TextWithSpinner("\nWell done!!\n");
+        TextWithSpinner($"You have completed another {elapsedTime} seconds of the {activityName}\n");
     }
     
-    public void RequestLength()
+    private void RequestLength()
     {
+        // TODO: make this safe
         Console.Write("How long, in seconds, would you like for your session? ");
         _duration = int.Parse(Console.ReadLine());
+    }
+
+    public void TextWithSpinner(string text, int length = _spinnerDuration)
+    {
+        Console.Write($"\n{text} ");
+        DoSpinner(length);
+    }
+
+    public void TextWithCountdown(string text, int length = _countDownDuration)
+    {
+        Console.Write($"\n{text}  ");
+        DoCountdown(length);
     }
 
     public void DoSpinner(int length = _spinnerDuration)
@@ -53,11 +65,12 @@ public class Activity
             }
 
         }
-        Console.WriteLine("\b ");
+        Console.Write("\b ");
     }
 
     public void DoCountdown(int length = _countDownDuration)
     {
+        // allow for length > 9 (but less than 100)
         for(int i = length; i > 0; i--)
         {
             Console.Write($"\b\b{i,2:D}");
@@ -84,7 +97,7 @@ public class Activity
 
     public int ElapsedTime()
     {
-        return((int)((DateTime.Now - _startTime).TotalSeconds + 0.500));
+        return((int)((DateTime.Now - _startTime).TotalSeconds + 0.500)); // fudge 0.5 to simulate rounding
     }
 
 }

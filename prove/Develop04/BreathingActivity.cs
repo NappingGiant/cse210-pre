@@ -16,24 +16,26 @@ public class BreathingActivity : Activity
 
     public int DoIt()
     {
+        // common opener
         Start(_activityName, _description);
+
+        // jump right in
         StartTimer();
         while(TimeRemains())
         {
-            Breathe();
+            Breathe(); // breath in, breath out, turn purple
         }
         int elapsedTime = ElapsedTime();
+
+        // common closer
         Finish(elapsedTime, _activityName);
         return(elapsedTime);
     }
 
     private void Breathe()
     {
-        Console.Write("\nBreath in...  ");
-        DoCountdown(_inBreath);
-        Console.Write("\nBreath out...  ");
-        DoCountdown(_outBreath);
-        Console.WriteLine();
+        TextWithCountdown("\nBreath in...", _inBreath);
+        TextWithCountdown("Breath out...", _outBreath);
     }
 
 

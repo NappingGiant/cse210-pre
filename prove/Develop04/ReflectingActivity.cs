@@ -15,49 +15,54 @@ public class ReflectingActivity : Activity
     private List<string> _questions = new List<string>{
         "How did you feel when this experience was complete?",
         "What is your favorite thing about this experience?",
-        "What did you learn from this experience?"
+        "What did you learn from this experience?",
+        "How did the Lord prepare you for this experience?",
     };
-    private Random _rnd;
 
     public ReflectingActivity() : base()
     {
-        _rnd = new Random();
-        return;
     }
 
     public int DoIt()
     {
+        // common header
         Start(_activityName, _description);
-        DoPrompt();
+
+        // show prompt and wait for <enter>
+        string prompt = GetRandomPrompt();
+        Console.WriteLine($"\n\nConsider the following prompt:\n\n --- {prompt} ---\n");
+        Console.Write("When you have something in mind,  press <enter> to continue ");
+        Console.ReadLine();
+
+        // stage 2: prompt to ponder question
+        Console.WriteLine("\nNow ponder on each of the following questions as they relate to this experience.");
+        TextWithCountdown("You may begin in", 5);
+
+        // now show questions, pausing for 10 seconds each
         Console.Clear();
         StartTimer();
         while(TimeRemains())
         {
-            DoQuestion();
-            DoSpinner(10);
+            TextWithSpinner($"> {GetRandomQuestion()} ", 10);
         }
         
+        // time is up, get total elapsed, display common closing and return total elapse
         int elapsedTime = ElapsedTime();
         Finish(elapsedTime, _activityName);
         return(elapsedTime);
     }
 
-    private void DoPrompt()
-    { 
-        string prompt = _prompts[_rnd.Next(_prompts.Count)];
-        Console.WriteLine($"\nConsider the following prompt:\n\n --- {prompt} ---\n");
-        Console.Write("When you have something in mind,  press <enter> to continue ");
-        Console.ReadLine();
-        Console.WriteLine("\nNow ponder on each of the following questions as they relate to this experience.");
-        Console.Write("You may be begin in  ");
-        DoCountdown();
-    }
-
-    private void DoQuestion()
+    private string GetRandomPrompt()
     {
-        string question = _questions[_rnd.Next(_questions.Count)];
-        Console.Write($"> {question}  ");
+        // TODO: don't reuse until the entire list has been used
+        string prompt = _prompts[_rnd.Next(_prompts.Count)];
+        return(prompt);
     }
 
-
+    private string GetRandomQuestion()
+    {
+        // TODO: don't reuse until the entire list has been used
+        string question = _questions[_rnd.Next(_questions.Count)];
+        return(question);
+    }
 }

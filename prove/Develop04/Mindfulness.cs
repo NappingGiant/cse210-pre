@@ -14,7 +14,6 @@ class Mindfulness
     private ReflectingActivity _ra;
     private ListingActivity _la;
 
-    private int totalTime;
     private int _baTime = 0;
     private int _raTime = 0;
     private int _laTime = 0;
@@ -27,7 +26,7 @@ class Mindfulness
         _ra = new ReflectingActivity();
         _la = new ListingActivity();
 
-        totalTime = 0;
+        // and we're off to the races
         Menu();
     }
 
@@ -49,7 +48,8 @@ class Mindfulness
                     _laTime += _la.DoIt();
                     break;
                 case "4":
-                    Console.WriteLine($"\nTotal time spent in mindfulness activities: {totalTime} seconds\n");
+                    Console.Clear();
+                    Console.WriteLine($"\nTotal time spent in mindfulness activities: {_baTime + _raTime + _laTime} seconds\n");
                     break;
                 default:
                     Console.WriteLine("oy");
@@ -60,19 +60,19 @@ class Mindfulness
     
     private string GetMenuChoice()
     {
-        string inThing = "";
+        string choice = "";
         while(true)
         {
             Console.Clear();
             Console.WriteLine($"You have completed {_baTime + _raTime + _laTime} seconds of mindfulness activities");
             Console.Write(_menuText);
-            inThing = Console.ReadLine();
-            if(_validChoices.Contains(inThing))
+            choice = Console.ReadLine();
+            if(_validChoices.Contains(choice))
             {
                 break;
             }
-            Console.WriteLine($"'{inThing}' isn't a valid choice. Try again...");
+            Console.WriteLine($"'{choice}' isn't a valid choice. Try again...");
         }
-        return(inThing);
+        return(choice);
     }
 }
