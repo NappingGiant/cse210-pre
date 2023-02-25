@@ -8,7 +8,11 @@ public class ListingActivity : Activity
         "having you list as many things as you can in a certain area.";
     private List<string> _prompts = new List<string>{
         "When have you felt the Holy Ghost this month?",
-        "When have you seen the hand of the Lord this month?"
+        "When have you seen the hand of the Lord this month?",
+        "Who are the people that you appreciate?",
+        "What are personal strengths of yours?",
+        "Who are people that you have helped this week?",
+        "Who are some of your personal heroes?",
     };
     private int _promptsNext = -1;
 
@@ -32,8 +36,11 @@ public class ListingActivity : Activity
         while(TimeRemains())
         {
             Console.Write("> ");
-            Console.ReadLine();
-            listCount++; // echoes of K&R?
+            // only count the item if there was something typed
+            if(Console.ReadLine() != "")
+            {
+                listCount++; // echoes of K&R?
+            }
         }
         int elapsedTime = ElapsedTime();
         Console.WriteLine($"You listed {listCount} items!");

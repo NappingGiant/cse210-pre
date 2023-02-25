@@ -12,6 +12,9 @@ public class ReflectingActivity : Activity
         "Think of a time when you did something really difficult.",
         "Think of a time when you helped somebody in trouble.",
         "Think of a time when you followed through with a promise even though it required sacrifice on your part",
+        "Think of a time when you stood up for someone else.",
+        "Think of a time when you helped somone in need",
+        "Think of a time when you did something truly selfless",
     };
     private int _promptsNext = -1;
     private List<string> _questions = new List<string>{
@@ -19,7 +22,13 @@ public class ReflectingActivity : Activity
         "What is your favorite thing about this experience?",
         "What did you learn from this experience?",
         "How did the Lord prepare you for this experience?",
-        "How would it help your family by journalling this experience?",
+        "How would it help your family to journal this experience?",
+        "Why was this experience meaningful to you?",
+        "Have you ever done anything like this before?",
+        "How did you get started?",
+        "What made this time different than other times when you were not as successful?",
+        "What could you learn from this experience that applies to other situations?",
+        "How can you keep this experience in mind in the future?",
     };
     private int _questionsNext = -1;
 
