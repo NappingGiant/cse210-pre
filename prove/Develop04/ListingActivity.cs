@@ -2,7 +2,7 @@ using System;
 
 public class ListingActivity : Activity
 {
-    private string _activityName = "ListingActivity";
+    private string _activityName = "Listing Activity";
     private string _description =
         "This activity will help you reflect on the good things in your life by\n" +
         "having you list as many things as you can in a certain area.";
@@ -10,6 +10,7 @@ public class ListingActivity : Activity
         "When have you felt the Holy Ghost this month?",
         "When have you seen the hand of the Lord this month?"
     };
+    private int _promptsNext = -1;
 
     public ListingActivity() : base()
     {
@@ -22,7 +23,7 @@ public class ListingActivity : Activity
 
         // show a prompt to consider
         Console.WriteLine($"\nList as many responses as you can to the following prompt:\n --- {GetPrompt()} ---");
-        TextWithCountdown("You may begin in ");
+        TextWithCountdown("You may begin in: ");
         Console.WriteLine();
 
         // now get (and drop) input lines until time is up
@@ -44,9 +45,20 @@ public class ListingActivity : Activity
 
     private string GetPrompt()
     {
-        // TODO: don't reuse until list is exhausted
-        string prompt = _prompts[_rnd.Next(_prompts.Count)];
-        return(prompt);
+        // point to the next (previous) prompt in the list
+        _promptsNext -= 1;
+
+        // check if the list is exhausted
+        if(_promptsNext < 0)
+        {
+            // (re)shuffle the list and point to the last entry
+            ShuffleStringList(_prompts);
+            _promptsNext = _prompts.Count() - 1;
+        }
+
+        // return the current list entry
+        return(_prompts[_promptsNext]);
+
     }
 
 }

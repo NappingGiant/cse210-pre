@@ -34,8 +34,8 @@ public class BreathingActivity : Activity
 
     private void Breathe()
     {
-        TextWithCountdown("\nBreath in...", _inBreath);
-        TextWithCountdown("Breath out...", _outBreath);
+        TextWithCountdown("\nBreathe in...", _inBreath);
+        TextWithCountdown("Now breathe out...", _outBreath);
     }
 
 

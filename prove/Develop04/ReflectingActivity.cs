@@ -2,7 +2,7 @@ using System;
 
 public class ReflectingActivity : Activity
 {
-    private string _activityName = "ReflectingActivity";
+    private string _activityName = "Reflecting Activity";
     private string _description =
         "This activity will help you reflect on times in your life when you have\n" +
         "shown strength and resilience. This will help you recognize the power you\n" +
@@ -10,14 +10,18 @@ public class ReflectingActivity : Activity
 
     private List<string> _prompts = new List<string>{
         "Think of a time when you did something really difficult.",
-        "Think of a time when you helped somebody in trouble."
+        "Think of a time when you helped somebody in trouble.",
+        "Think of a time when you followed through with a promise even though it required sacrifice on your part",
     };
+    private int _promptsNext = -1;
     private List<string> _questions = new List<string>{
         "How did you feel when this experience was complete?",
         "What is your favorite thing about this experience?",
         "What did you learn from this experience?",
         "How did the Lord prepare you for this experience?",
+        "How would it help your family by journalling this experience?",
     };
+    private int _questionsNext = -1;
 
     public ReflectingActivity() : base()
     {
@@ -54,15 +58,36 @@ public class ReflectingActivity : Activity
 
     private string GetRandomPrompt()
     {
-        // TODO: don't reuse until the entire list has been used
-        string prompt = _prompts[_rnd.Next(_prompts.Count)];
-        return(prompt);
+        // point to the next (previous) prompt in the list
+        _promptsNext -= 1;
+
+        // check if the list is exhausted
+        if(_promptsNext < 0)
+        {
+            // (re)shuffle the list and point to the last entry
+            ShuffleStringList(_prompts);
+            _promptsNext = _prompts.Count() - 1;
+        }
+
+        // return the current list entry
+        return(_prompts[_promptsNext]);
+
     }
 
     private string GetRandomQuestion()
     {
-        // TODO: don't reuse until the entire list has been used
-        string question = _questions[_rnd.Next(_questions.Count)];
-        return(question);
+        // point to the next (previous) prompt in the list
+        _questionsNext -= 1;
+
+        // check if the list is exhausted
+        if(_questionsNext < 0)
+        {
+            // (re)shuffle the list and point to the last entry
+            ShuffleStringList(_questions);
+            _questionsNext = _questions.Count() - 1;
+        }
+
+        // return the current list entry
+        return(_questions[_questionsNext]);
     }
 }

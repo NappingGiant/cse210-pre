@@ -26,7 +26,7 @@ class Mindfulness
         _ra = new ReflectingActivity();
         _la = new ListingActivity();
 
-        // and we're off to the races
+        // start the Main loop
         Menu();
     }
 

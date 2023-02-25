@@ -2,13 +2,16 @@ using System;
 
 // https://www.w3schools.com/cs/cs_variables_constants.php
 // https://stackoverflow.com/questions/45959959/how-to-measure-elapsed-time-using-datetime-class
+// https://stackoverflow.com/questions/273313/randomize-a-listt
 
 public class Activity
 {
     private int _duration;
     private DateTime _endTime;
     private DateTime _startTime;
-    private string[] _spinnerText = {"/", "-", "\\", "|"};
+    //private string[] _spinnerText = {"'", "\"", "|", "/", "-", "\\", };
+    //private string[] _spinnerText = {"|", "/", "-", "\\", "|", "/", "-", "\\", "|", "/", "-", "\\", };
+    private string[] _spinnerText = {"|", "/", "-", "\\"};
     private int _spinnerTextLength;
     const int _spinnerDuration = 5;
     const int _countDownDuration = 5;
@@ -38,8 +41,25 @@ public class Activity
     private void RequestLength()
     {
         // TODO: make this safe
-        Console.Write("How long, in seconds, would you like for your session? ");
-        _duration = int.Parse(Console.ReadLine());
+        int inPut = 0;
+        while(inPut <= 0)
+        {
+            Console.Write("How long, in seconds, would you like for your session? ");
+            try
+            {
+                inPut = int.Parse(Console.ReadLine());
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"Please enter a valid integer value! ({e.Message})");
+                inPut = 0;
+            } 
+            if(inPut < 0)
+            {
+                Console.WriteLine("Please enter a positive integer value!");
+            }
+        }
+        _duration = inPut;
     }
 
     public void TextWithSpinner(string text, int length = _spinnerDuration)
@@ -56,12 +76,13 @@ public class Activity
 
     public void DoSpinner(int length = _spinnerDuration)
     {
-        for(int i = 0; i < length; i++)
+        int sleepTime = (int)(1000 / _spinnerTextLength);
+        for(int i = 0; i < length; i++) // count the seconds in this loop
         {
-            for(int j = 0; j < _spinnerTextLength; j++)
+            for(int j = 0; j < _spinnerTextLength; j++) // do the entire animation once per second
             {
                 Console.Write($"\b{_spinnerText[j]}");
-                Thread.Sleep((int)(1000 / _spinnerTextLength));
+                Thread.Sleep(sleepTime); // but how much time does the code add???
             }
 
         }
@@ -81,7 +102,7 @@ public class Activity
 
     public void DoProgressBar(int length)
     {
-        
+        Console.WriteLine("not implemented yet");
     }
     
     public void StartTimer()
@@ -92,12 +113,28 @@ public class Activity
 
     public bool TimeRemains()
     {
-        return(DateTime.Now < _endTime);
+        return(DateTime.Now <= _endTime);
     }
 
     public int ElapsedTime()
     {
         return((int)((DateTime.Now - _startTime).TotalSeconds + 0.500)); // fudge 0.5 to simulate rounding
     }
+
+    public void ShuffleStringList<T>(List<T> inList)
+    {
+        // does an in-place shuffle of a List<>
+        // https://stackoverflow.com/questions/273313/randomize-a-listt
+
+        int n = inList.Count;  
+        while (n > 1) {  
+            n--;  
+            int k = _rnd.Next(n + 1);  
+            T value = inList[k];  
+            inList[k] = inList[n];  
+            inList[n] = value;  
+        }  
+    }
+
 
 }
