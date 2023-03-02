@@ -17,18 +17,18 @@ public class BreathingActivity : Activity
     public int DoIt()
     {
         // common opener
-        Start(_activityName, _description);
+        base.Start(_activityName, _description);
 
         // jump right in
-        StartTimer();
-        while(TimeRemains())
+        base.StartTimer();
+        while(base.TimeRemains())
         {
             Breathe(); // breath in, breath out, turn purple
         }
-        int elapsedTime = ElapsedTime();
+        int elapsedTime = base.ElapsedTime();
 
         // common closer
-        Finish(elapsedTime, _activityName);
+        base.Finish(elapsedTime, _activityName);
         return(elapsedTime);
     }
 

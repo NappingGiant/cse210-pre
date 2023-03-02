@@ -23,17 +23,17 @@ public class ListingActivity : Activity
     public int DoIt()
     {
         // common header
-        Start(_activityName, _description);
+        base.Start(_activityName, _description);
 
         // show a prompt to consider
         Console.WriteLine($"\nList as many responses as you can to the following prompt:\n --- {GetPrompt()} ---");
-        TextWithCountdown("You may begin in: ");
+        base.TextWithCountdown("You may begin in: ");
         Console.WriteLine();
 
         // now get (and drop) input lines until time is up
         int listCount = 0;
-        StartTimer();
-        while(TimeRemains())
+        base.StartTimer();
+        while(base.TimeRemains())
         {
             Console.Write("> ");
             // only count the item if there was something typed
@@ -42,11 +42,11 @@ public class ListingActivity : Activity
                 listCount++; // echoes of K&R?
             }
         }
-        int elapsedTime = ElapsedTime();
+        int elapsedTime = base.ElapsedTime();
         Console.WriteLine($"You listed {listCount} items!");
 
         // common closer
-        Finish(elapsedTime, _activityName);
+        base.Finish(elapsedTime, _activityName);
         return(elapsedTime);
     }
 
@@ -59,7 +59,7 @@ public class ListingActivity : Activity
         if(_promptsNext < 0)
         {
             // (re)shuffle the list and point to the last entry
-            ShuffleStringList(_prompts);
+            base.ShuffleStringList(_prompts);
             _promptsNext = _prompts.Count() - 1;
         }
 

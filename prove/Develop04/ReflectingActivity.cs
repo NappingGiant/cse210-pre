@@ -39,7 +39,7 @@ public class ReflectingActivity : Activity
     public int DoIt()
     {
         // common header
-        Start(_activityName, _description);
+        base.Start(_activityName, _description);
 
         // show prompt and wait for <enter>
         string prompt = GetRandomPrompt();
@@ -49,19 +49,19 @@ public class ReflectingActivity : Activity
 
         // stage 2: prompt to ponder question
         Console.WriteLine("\nNow ponder on each of the following questions as they relate to this experience.");
-        TextWithCountdown("You may begin in", 5);
+        base.TextWithCountdown("You may begin in", 5);
 
         // now show questions, pausing for 10 seconds each
         Console.Clear();
-        StartTimer();
+        base.StartTimer();
         while(TimeRemains())
         {
-            TextWithSpinner($"> {GetRandomQuestion()} ", 10);
+            base.TextWithSpinner($"> {GetRandomQuestion()} ", 10);
         }
         
         // time is up, get total elapsed, display common closing and return total elapse
-        int elapsedTime = ElapsedTime();
-        Finish(elapsedTime, _activityName);
+        int elapsedTime = base.ElapsedTime();
+        base.Finish(elapsedTime, _activityName);
         return(elapsedTime);
     }
 
@@ -74,7 +74,7 @@ public class ReflectingActivity : Activity
         if(_promptsNext < 0)
         {
             // (re)shuffle the list and point to the last entry
-            ShuffleStringList(_prompts);
+            base.ShuffleStringList(_prompts);
             _promptsNext = _prompts.Count() - 1;
         }
 

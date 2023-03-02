@@ -126,13 +126,13 @@ public class Activity
         // does an in-place shuffle of a List<>
         // https://stackoverflow.com/questions/273313/randomize-a-listt
 
-        int n = inList.Count;  
-        while (n > 1) {  
-            n--;  
-            int k = _rnd.Next(n + 1);  
-            T value = inList[k];  
-            inList[k] = inList[n];  
-            inList[n] = value;  
+        int currentEntryIndex = inList.Count;  
+        while (currentEntryIndex > 1) {  
+            currentEntryIndex--;  
+            int swapEntryIndex = _rnd.Next(currentEntryIndex + 1);  
+            T swapEntry = inList[swapEntryIndex];  
+            inList[swapEntryIndex] = inList[currentEntryIndex];  
+            inList[currentEntryIndex] = swapEntry;  
         }  
     }
 
