@@ -6,5 +6,6 @@ class Program
     {
         Console.WriteLine("Hello Develop05 World!");
         // use the explicit base. syntax as suggested by Bro. Carter
+        EternalQuestion eq = new EternalQuestion();
     }
 }
