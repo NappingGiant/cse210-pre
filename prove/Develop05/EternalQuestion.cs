@@ -54,26 +54,26 @@ public class EternalQuestion
         List<int> available = new List<int>();
         int idx = 0;
         int seq = 0;
-        Console.WriteLine("The goals are:");
+        Console.WriteLine("The incomplete goals are:");
         foreach(Goal goal in _goals)
         {
             if(!goal.GetCompletionStatus())
             {
                 available.Add(idx);
-                Console.WriteLine($"{seq + 1}. {goal.GetName()}");
+                Console.WriteLine($"  {seq + 1}. {goal.GetName()}");
                 seq += 1;
             }
             idx += 1;
         }
         int sel = GetInt("Which goal did you accomplish?");
-        sel -= 1;
-        if(sel > idx || sel < 0)
+        if((sel > seq) || (sel < 1))
         {
-            Console.WriteLine($"'{sel}' is not a valid choice!");
+            Console.Write($"'{sel}' is not a valid choice!\nIGNORING any accomplishment\nPress <enter> to continue...");
+            Console.ReadLine();
         }
         else
         {
-            int award = _goals[available[sel]].RecordAnEvent();
+            int award = _goals[available[sel - 1]].RecordAnEvent();
             Console.WriteLine($"Congratulations! You have earned {award} points!");
             CalculateTotalPoints();
             Console.WriteLine($"You now have {_totalPoints} points.");
@@ -186,12 +186,11 @@ public class EternalQuestion
         {
             Console.Write($"{prompt} ");
             qux = Console.ReadLine();
-            try
+            if(int.TryParse(qux, out baz))
             {
-                baz = int.Parse(qux);
                 break;
             }
-            catch
+            else
             {
                 Console.WriteLine($"Nah. '{qux}' doesn't work. I'm looking for a number...");
             }
