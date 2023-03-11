@@ -72,6 +72,12 @@ public class StoreGoals
                     cg.PopulateFromStorageArray(fields);
                     goalList.Add(cg);
                     break;
+
+                case "LG":
+                    LevelGoal lg = new LevelGoal();
+                    lg.PopulateFromStorageArray(fields);
+                    goalList.Add(lg);
+                    break;
                 default:
                     throw new ArgumentException();
             }

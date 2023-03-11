@@ -16,7 +16,7 @@ public class ChecklistGoal : Goal
         _bonusPoints = bonusPoints;
     }
 
-    public override int RecordAnEvent()
+    public override int RecordAnEvent(int ignore)
     {
         _completedEvents += 1;
         int pointsToAward = base._eventPoints;

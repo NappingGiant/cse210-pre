@@ -9,7 +9,7 @@ public class EternalGoal : Goal
         base._eventPoints = points;
     }
 
-    public override int RecordAnEvent()
+    public override int RecordAnEvent(int ignore)
     {
         base._pointsAccomplished += base._eventPoints;
         return(base._eventPoints);

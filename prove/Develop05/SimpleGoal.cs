@@ -9,7 +9,7 @@ public class SimpleGoal : Goal
         base._eventPoints = points;
     }
 
-    public override int RecordAnEvent()
+    public override int RecordAnEvent(int ignore)
     {
         base._pointsAccomplished = base._eventPoints;
         base._completed = true;

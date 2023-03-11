@@ -7,6 +7,7 @@ public abstract class Goal
     protected int _pointsAccomplished = 0;
     protected bool _completed = false; // goal is completely done
     protected int _eventPoints = 0; // award for completion of the goal
+    protected string _reward = ""; // currently only used for LevelGoal?
 
     public Goal()
     {
@@ -25,7 +26,7 @@ public abstract class Goal
         return($"{_name} ({_description})");
     }
 
-    public abstract int RecordAnEvent(); // each must provide a method to complete an event
+    public abstract int RecordAnEvent(int foo = 0); // each must provide a method to complete an event
 
     // return a string of fields that can be used to construct an instance of the derived goaltype
     public abstract string[] MakeStorageArray(); 
@@ -46,5 +47,10 @@ public abstract class Goal
     public string GetName()
     {
         return(_name);
+    }
+
+    public string GetReward()
+    {
+        return(_reward);
     }
 }

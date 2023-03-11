@@ -21,8 +21,9 @@ public class EternalQuestion
         "  1. Simple Goal\n" +
         "  2. Eternal Goal\n" +
         "  3. Checklist Goal\n" +
+        "  4. Level Goal\n" +
         "Which type of Goal would you like to create? ";
-    private List<string> _goalMenuChoices = new List<string>{"1", "2", "3", };
+    private List<string> _goalMenuChoices = new List<string>{"1", "2", "3", "4"};
 
 
     public EternalQuestion()
@@ -49,7 +50,7 @@ public class EternalQuestion
         }
     }
 
-    private void DoEvent()
+    private void RecordEvent()
     {
         List<int> available = new List<int>();
         int idx = 0;
@@ -57,11 +58,14 @@ public class EternalQuestion
         Console.WriteLine("The incomplete goals are:");
         foreach(Goal goal in _goals)
         {
-            if(!goal.GetCompletionStatus())
+            if(goal.GetType().ToString() != "LevelGoal") // don't do LevelGoal 
             {
-                available.Add(idx);
-                Console.WriteLine($"  {seq + 1}. {goal.GetName()}");
-                seq += 1;
+                if(!goal.GetCompletionStatus())
+                {
+                    available.Add(idx);
+                    Console.WriteLine($"  {seq + 1}. {goal.GetName()}");
+                    seq += 1;
+                }
             }
             idx += 1;
         }
@@ -102,7 +106,8 @@ public class EternalQuestion
                     CalculateTotalPoints();
                     break;
                 case "5":
-                    DoEvent();
+                    RecordEvent();
+                    CheckLevelGoals();
                     break;
                 case "6":
                     Console.WriteLine($"\nYou have {_totalPoints} points.\nGoodbye!");
@@ -141,6 +146,13 @@ public class EternalQuestion
                 ChecklistGoal _cg = new ChecklistGoal(name, description, eventPoints, expectedEvents, bonusPoints);
                 _goals.Add(_cg);
                 break;
+
+            case "4":
+                int threshhold = GetInt("How many total points are needed to reach this level?");
+                string reward = GetString("What reward will you get?");
+                LevelGoal _lg = new LevelGoal(name, description, reward, threshhold);
+                _goals.Add(_lg);
+                break;
         }
         Console.WriteLine($"Goal '{name}' has been added to the list of goals.");
     }
@@ -171,6 +183,26 @@ public class EternalQuestion
         return;
     }
 
+    private void CheckLevelGoals()
+    {
+        foreach(Goal goal in _goals)
+        {
+            if(goal.GetType().ToString() == "LevelGoal")
+            {
+                if(! goal.GetCompletionStatus())
+                {
+                    int foo = goal.RecordAnEvent(_totalPoints);
+                    if(goal.GetCompletionStatus()) // has completion status changed to true?
+                    {
+                        Console.WriteLine("ding * ding * ding * ding * ding * ding * ding * ding * ding * ding * ding * ding * ding * ding * ding");
+                        Console.WriteLine($"\nCongratulations!! You have earned a {goal.GetReward()}!!");
+                        Console.Write("Press <enter> to continue...");
+                        Console.ReadLine();
+                    }
+                }
+            }
+        }
+    }
 
     private string GetString(string prompt)
     {

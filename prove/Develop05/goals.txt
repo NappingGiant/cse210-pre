@@ -1,3 +1,6 @@
-SG⁞homework⁞finish eternal quest assignment⁞1000000⁞1000000⁞True
-EG⁞get well⁞eat healthy meals⁞250⁞1250⁞False
-CG⁞recipes⁞learn three new recipes⁞400⁞3700⁞True⁞3⁞3⁞2500
+SG⁞homework⁞finish the EternalQuest programm⁞2500⁞0⁞False
+EG⁞get well⁞eat healthy meals⁞250⁞0⁞False
+CG⁞recipes⁞learn three new recipes⁞400⁞0⁞False⁞3⁞0⁞2000
+EG⁞points⁞points r points⁞1000⁞0⁞False
+LG⁞start well⁞start using EternalQuest⁞0⁞0⁞False⁞a new pair of socks⁞4000
+LG⁞determination⁞continue using EternalQuest⁞0⁞0⁞False⁞a new computer⁞6000
