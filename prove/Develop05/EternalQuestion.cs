@@ -21,9 +21,8 @@ public class EternalQuestion
         "  1. Simple Goal\n" +
         "  2. Eternal Goal\n" +
         "  3. Checklist Goal\n" +
-        "  4. Oops, don't want to add right now\n" +
         "Which type of Goal would you like to create? ";
-    private List<string> _goalMenuChoices = new List<string>{"1", "2", "3", "4"};
+    private List<string> _goalMenuChoices = new List<string>{"1", "2", "3", };
 
 
     public EternalQuestion()
@@ -36,7 +35,7 @@ public class EternalQuestion
         Menu();
     }
 
-    private void ListGoals()
+    private void ListAllGoals()
     {
         Console.WriteLine("The goals are:");
         for(int i = 0; i < _goals.Count; i++)
@@ -46,10 +45,39 @@ public class EternalQuestion
             {
                 status = "X";
             }
-            Console.WriteLine($"{i}. [{status}] {_goals[i].GetPrintString()}");
-
+            Console.WriteLine($"{i + 1}. [{status}] {_goals[i].GetPrintString()}");
         }
+    }
 
+    private void DoEvent()
+    {
+        List<int> available = new List<int>();
+        int idx = 0;
+        int seq = 0;
+        Console.WriteLine("The goals are:");
+        foreach(Goal goal in _goals)
+        {
+            if(!goal.GetCompletionStatus())
+            {
+                available.Add(idx);
+                Console.WriteLine($"{seq + 1}. {goal.GetName()}");
+                seq += 1;
+            }
+            idx += 1;
+        }
+        int sel = GetInt("Which goal did you accomplish?");
+        sel -= 1;
+        if(sel > idx || sel < 0)
+        {
+            Console.WriteLine($"'{sel}' is not a valid choice!");
+        }
+        else
+        {
+            int award = _goals[available[sel]].RecordAnEvent();
+            Console.WriteLine($"Congratulations! You have earned {award} points!");
+            CalculateTotalPoints();
+            Console.WriteLine($"You now have {_totalPoints} points.");
+        }
     }
 
     private void Menu()
@@ -64,7 +92,7 @@ public class EternalQuestion
                     GoalMenu();
                     break;
                 case "2":
-                    ListGoals();
+                    ListAllGoals();
                     break;
                 case "3":
                     _storeGoals.Save(_goals);
@@ -74,8 +102,7 @@ public class EternalQuestion
                     CalculateTotalPoints();
                     break;
                 case "5":
-                    Console.WriteLine("Record Event not implemented yet");
-                    CalculateTotalPoints();
+                    DoEvent();
                     break;
                 case "6":
                     Console.WriteLine($"\nYou have {_totalPoints} points.\nGoodbye!");
@@ -90,33 +117,32 @@ public class EternalQuestion
     private void GoalMenu()
     {
         string choice = "";
-        while(choice != "4")
+        choice = GetMenuChoice(_goalMenuText, _goalMenuChoices);
+        string name = GetString("What is the name of your goal?");
+        string description = GetString("What is a short description of it?");
+        switch(choice)
         {
-            choice = GetMenuChoice(_goalMenuText, _goalMenuChoices);
-            switch(choice)
-            {
-                case "1":
-                SimpleGoal _sg = new SimpleGoal();
-                
+            case "1":
+                int points = GetInt("How many points will be awarded on completion?");
+                SimpleGoal _sg = new SimpleGoal(name, description, points);
                 _goals.Add(_sg);
-                choice = "4"; // ok, we're done here (AWKWARD!)
                 break;
 
-                case "2":
-                EternalGoal _eg = new EternalGoal();
-                
+            case "2":
+                points = GetInt("How many points will be awarded each time this is done?");
+                EternalGoal _eg = new EternalGoal(name, description, points); 
                 _goals.Add(_eg);
-                choice = "4";
                 break;
 
-                case "3":
-                ChecklistGoal _cg = new ChecklistGoal();
-                
+            case "3":
+                int expectedEvents = GetInt("How many times do you want to do this?");
+                int eventPoints = GetInt("How many points will be awarded each time this is done?");
+                int bonusPoints = GetInt("How many bonus points for completing all of them?");
+                ChecklistGoal _cg = new ChecklistGoal(name, description, eventPoints, expectedEvents, bonusPoints);
                 _goals.Add(_cg);
-                choice = "4";
                 break;
-            }
         }
+        Console.WriteLine($"Goal '{name}' has been added to the list of goals.");
     }
     
     private string GetMenuChoice(string menuText, List<string> validChoices)
@@ -142,7 +168,36 @@ public class EternalQuestion
         {
             _totalPoints += goal.GetPointsAccomplished();
         }
-
+        return;
     }
+
+
+    private string GetString(string prompt)
+    {
+        Console.Write($"{prompt} ");
+        return(Console.ReadLine());
+    }
+
+    private int GetInt(string prompt)
+    {
+        int baz = 0;
+        string qux = "";
+        while(true)
+        {
+            Console.Write($"{prompt} ");
+            qux = Console.ReadLine();
+            try
+            {
+                baz = int.Parse(qux);
+                break;
+            }
+            catch
+            {
+                Console.WriteLine($"Nah. '{qux}' doesn't work. I'm looking for a number...");
+            }
+        }
+        return(baz);
+    }
+
 
 }
